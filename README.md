@@ -1,7 +1,5 @@
 # DetoursLibrary
-Little detours library.
 -----
-# Little Detours Library.
 
 Возвращает true в случае успеха.
 long* source - указатель на оригинальную функцию.
