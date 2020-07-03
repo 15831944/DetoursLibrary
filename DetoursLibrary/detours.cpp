@@ -72,9 +72,11 @@ bool Detour::ReInstall()
 		return false;
 
 	if (WriteProcessMemory((HANDLE)-1, this->address, this->hooked, 0x06, 0))
+	{
+		this->hFLAG = true;
 		return true;
+	}
 
-	this->hFLAG = true;
 	return false;
 }
 
