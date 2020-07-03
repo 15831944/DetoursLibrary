@@ -6,10 +6,13 @@ Detour::Detour()
 	this->hooked = nullptr;
 	this->original = nullptr;
 	this->iFLAG = false;
+	this->hFLAG = false;
 }
 
 Detour::~Detour()
 {
+	this->UnInstall();
+
 	if (this->iFLAG)
 	{
 		free(this->original);
@@ -17,7 +20,7 @@ Detour::~Detour()
 	}
 }
 
-bool Detour::Install(long* lpSource, long* lpDestination)
+bool Detour::Install(LPVOID lpSource, LPVOID lpDestination)
 {
 	if (this->iFLAG)
 		return false;
@@ -46,15 +49,16 @@ bool Detour::Install(long* lpSource, long* lpDestination)
 		return false;
 	}
 
-	long* dwCalc = reinterpret_cast<long*>((long)lpDestination - (long)lpSource - 5);
+	DWORD dwCalc = (DWORD)lpDestination - (DWORD)lpSource - 5;
 	Memory::Write<BYTE>(this->hooked, X86OP_JMP);
-	Memory::Write<long*>(this->hooked + 0x01, dwCalc);
+	Memory::Write<DWORD>(this->hooked + 0x01, dwCalc);
 	Memory::Write<BYTE>(this->hooked + 5, X86OP_RET);
 
 	if (WriteProcessMemory((HANDLE)-1, lpSource, this->hooked, 0x06, 0))
 	{
 		this->iFLAG = true;
-		this->address = reinterpret_cast<long*>(lpSource);
+		this->address = (DWORD*)lpSource;
+		this->hFLAG = true;
 		return true;
 	}
 #undef X86OP_JMP
@@ -69,6 +73,8 @@ bool Detour::ReInstall()
 
 	if (WriteProcessMemory((HANDLE)-1, this->address, this->hooked, 0x06, 0))
 		return true;
+
+	this->hFLAG = true;
 	return false;
 }
 
@@ -77,8 +83,15 @@ bool Detour::UnInstall()
 	if (!this->iFLAG)
 		return false;
 
+	if (!this->hFLAG)
+		return false;
+
 	if (WriteProcessMemory((HANDLE)-1, this->address, this->original, 0x06, 0))
+	{
+		this->hFLAG = false;
 		return true;
+	}
+
 	return false;
 }
 
@@ -89,5 +102,5 @@ long* Detour::FindFunction(LPCWSTR szLibName, LPCSTR szFunctionName)
 
 bool Detour::IsInstalled()
 {
-	return iFLAG;
+	return hFLAG;
 }

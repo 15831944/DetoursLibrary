@@ -7,13 +7,14 @@ class Detour
 {
 private:
 	bool	iFLAG;
+	bool	hFLAG;
 	BYTE*	original;
 	BYTE*	hooked;
-	long*	address;
+	DWORD*	address;
 public:
 	Detour();
 	~Detour();
-	bool	Install(long* source, long* destination);
+	bool	Install(LPVOID source, LPVOID destination);
 	bool	ReInstall();
 	bool	UnInstall();
 	long*	FindFunction(LPCWSTR szLibName, LPCSTR szFunctionName);
