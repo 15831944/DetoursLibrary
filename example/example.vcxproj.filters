@@ -13,10 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Vendor">
+      <UniqueIdentifier>{c13fc180-5425-4387-b6ad-f65cd5a69839}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Vendor\Detours">
+      <UniqueIdentifier>{06e59473-df5c-458d-9d9b-7ae9bc0c1e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Vendor">
+      <UniqueIdentifier>{b3fe7d6b-a046-4c86-b721-4c3cd985e295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Vendor\Detours">
+      <UniqueIdentifier>{c426575b-c52f-4d8c-863f-a87830fe57ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="example.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\DetoursLibrary\detours.cpp">
+      <Filter>Исходные файлы\Vendor\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DetoursLibrary\memory.cpp">
+      <Filter>Исходные файлы\Vendor\Detours</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="example.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DetoursLibrary\detours.h">
+      <Filter>Файлы заголовков\Vendor\Detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DetoursLibrary\memory.h">
+      <Filter>Файлы заголовков\Vendor\Detours</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
