@@ -17,7 +17,7 @@ bool	ReInstall();
 ```cpp
 bool	UnInstall();
 ```
-Возвращает адрес функции szFunctionName из библиотеки szLibName если та найдена.
+Возвращает адрес функции szFunctionName из библиотеки szLibName.
 В противном случае возвращает NULL.
 ```cpp
 long*	FindFunction(LPCWSTR szLibName, LPCSTR szFunctionName);
